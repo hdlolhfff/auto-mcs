@@ -1,0 +1,37 @@
+?main: jvalue
+
+?jvalue: jobject
+       | "'" jobject "'"   -> jvalue_quoted_obj
+       | jarray
+       | string
+       | "null"             -> jnull
+
+jobject: "{" "}"          -> empty_obj
+       | "{" pair ("," pair)* ","? "}" -> object
+
+jarray: "[" "]"            -> empty_list
+      | "[" array_type ";" jvalue ("," jvalue)* ","? "]" -> typed_array
+      | "[" (jvalue | bare_letter) ("," (jvalue | bare_letter))* ","? "]" -> array
+      | "[" pair ("," pair)* ","? "]"             -> array_pair
+
+pair: string COLON jvalue   -> kv
+
+string: ESCAPED_STRING        -> quoted_string
+      | UNQUOTED              -> bare_string
+
+array_type: "B" -> byte_array
+          | "I" -> int_array
+          | "L" -> long_array
+
+bare_letter: "B" -> bare_b
+           | "I" -> bare_i
+           | "L" -> bare_l
+
+COLON: ":"
+
+ESCAPED_STRING: "\"" ( "\\\"" | /[^"]/ )* "\""
+
+UNQUOTED: /[^"'{}\[\]:;, \t\r\n][^{}\[\]:;, \t\r\n]*/
+
+%import common.WS
+%ignore WS
