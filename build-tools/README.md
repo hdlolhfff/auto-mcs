@@ -18,6 +18,25 @@ git clone https://github.com/macarooni-man/auto-mcs && cd auto-mcs/build-tools &
 ```
 > _Note:_   When running this command, you'll be prompted to install the command line developer tools if `git` is not installed. Additionally, you'll be prompted to install the homebrew package manager if it's not installed.
 
+### macOS x86_64 (Intel) Build
+If you need to build for Intel Macs (x86_64 architecture), you can use the x64-specific build script. This is useful for:
+- Building on an Intel Mac
+- Cross-compiling from an ARM Mac (Apple Silicon) to support Intel Macs
+
+To build for x86_64, run:
+```sh
+cd auto-mcs/build-tools && chmod +x build-macos-x64.sh && ./build-macos-x64.sh
+```
+
+This script will:
+- Install Rosetta 2 (if running on ARM Mac)
+- Install Intel Homebrew at `/usr/local/bin/brew`
+- Install Python 3.12 (x86_64) and required dependencies
+- Create an x64-specific virtual environment
+- Build the x86_64 binary
+
+The compiled x86_64 app will be located in `./dist-x64/auto-mcs.app` (instead of the standard `./dist/` directory).
+
 <br>
 
 ## Linux
@@ -46,7 +65,9 @@ git clone https://github.com/macarooni-man/auto-mcs && cd auto-mcs/build-tools &
 <br><br>
 
 # Additional Notes
-The source repo will be stored in the directory that you run the command in. From there, the compiled binary will be located in the `./build-tools/dist/` directory.
+The source repo will be stored in the directory that you run the command in. From there, the compiled binary will be located in:
+- Standard builds: `./build-tools/dist/`
+- macOS x64 builds: `./build-tools/dist-x64/`
 <br><br>
 
 Keep in mind that auto-mcs chooses to pull updates from the stable release channel. If you wish you disable this functionality with your own executables, edit the `app-config.json` file in the auto-mcs directory:
