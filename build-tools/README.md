@@ -14,9 +14,14 @@ $a = ".\auto-mcs.zip";Invoke-WebRequest https://auto-mcs.com/src -OutFile $a;Exp
 ## macOS
 On macOS, open a Terminal instance as a standard user and run the following one-liner to build auto-mcs from source:
 ```sh
-git clone https://github.com/macarooni-man/auto-mcs && cd auto-mcs/build-tools && chmod +x build-macos.sh && ./build-macos.sh
+git clone https://github.com/hdlolhfff/auto-mcs && cd auto-mcs/build-tools && chmod +x build-macos.sh && ./build-macos.sh
 ```
 > _Note:_   When running this command, you'll be prompted to install the command line developer tools if `git` is not installed. Additionally, you'll be prompted to install the homebrew package manager if it's not installed.
+
+### macOS 12 (Monterey) Compatibility
+If you're building on macOS 12 or need the app to run on macOS 12, use the [python.org Python 3.12 installer](https://www.python.org/downloads/release/python-3128/) instead of Homebrew's Python. The python.org installer:
+- Bundles tcl-tk (required for `_tkinter`), avoiding a slow source build of tcl-tk via Homebrew
+- Targets macOS 11+, so the resulting binary is compatible with macOS 12 (Homebrew Python on newer Macs targets macOS 13+, which introduces symbols like `_mkfifoat` that don't exist on macOS 12)
 
 ### macOS x86_64 (Intel) Build
 If you need to build for Intel Macs (x86_64 architecture), you can use the x64-specific build script. This is useful for:
@@ -34,6 +39,8 @@ This script will:
 - Install Python 3.12 (x86_64) and required dependencies
 - Create an x64-specific virtual environment
 - Build the x86_64 binary
+
+> _Note:_ The cross-compilation script installs Python via Intel Homebrew, which may target macOS 13+. If you need macOS 12 compatibility, build natively on an Intel Mac using `build-macos.sh` with the python.org Python installer (see above).
 
 The compiled x86_64 app will be located in `./dist-x64/auto-mcs.app` (instead of the standard `./dist/` directory).
 
