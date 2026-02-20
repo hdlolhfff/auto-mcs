@@ -2,6 +2,7 @@
 name: Compiler
 on:
   push: null
+  workflow_dispatch: null
 jobs:
 
   # Setup and test variables from the code
