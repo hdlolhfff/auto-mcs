@@ -123,6 +123,7 @@ jobs:
       - name: Compile auto-mcs
         run: |
           export CI=true
+          export MACOSX_DEPLOYMENT_TARGET=12.0
 
           # Build auto-mcs
           root=$(pwd)
@@ -221,6 +222,7 @@ jobs:
       - name: Compile auto-mcs (x86_64)
         run: |
           export CI=true
+          export MACOSX_DEPLOYMENT_TARGET=12.0
 
           # Build auto-mcs for x86_64
           root=$(pwd)

@@ -157,11 +157,14 @@ sed 's/target_arch = None/target_arch = "x86_64"/' auto-mcs.macos.spec > $spec_f
 # Build
 info "Compiling auto-mcs for x86_64..."
 export KIVY_AUDIO=ffpyplayer
+export MACOSX_DEPLOYMENT_TARGET=12.0
 cd $current
 cp $spec_file ../source
 cd ../source
 rm -rf build/
 rm -rf dist/
+# Ensure setuptools is available for pyinstaller
+arch -x86_64 python -c "import pkg_resources" || arch -x86_64 pip install --upgrade setuptools
 arch -x86_64 pyinstaller "$spec_file" --clean --log-level INFO
 cd $current
 rm -rf ../source/$spec_file

@@ -160,11 +160,14 @@ rm -rf $venv_path/lib/python3.12/site-packages/kivy/data/logo/*
 # Build
 echo Compiling auto-mcs
 export KIVY_AUDIO=ffpyplayer
+export MACOSX_DEPLOYMENT_TARGET=12.0
 cd $current
 cp $spec_file ../source
 cd ../source
 rm -rf build/
 rm -rf dist/
+# Ensure setuptools is available for pyinstaller
+python -c "import pkg_resources" || pip install --upgrade setuptools
 pyinstaller "$spec_file" --clean --log-level INFO
 cd $current
 rm -rf ../source/$spec_file

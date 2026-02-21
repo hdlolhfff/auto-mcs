@@ -107,6 +107,7 @@ app = BUNDLE(coll,
         'NSAppleScriptEnabled': False,
         'NSHighResolutionCapable': False,
         'CFBundleShortVersionString': app_version,
+        'LSMinimumSystemVersion': '12.0',
         'CFBundleDocumentTypes': [
             {
                 "CFBundleTypeExtensions": ["ams"],
